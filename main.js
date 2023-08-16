@@ -22,11 +22,23 @@ const sliderOption = {
     }
   }
 };
+const min_xy = [];
+const max_xy = [];
+const numOfQuesField = document.getElementById("numOfQuestion");
+const startSubmit = document.getElementById("startSubmit");
 
 for(const range of range_xy) noUiSlider.create(range, sliderOption);
 for(let i = 0;i < 2;i++){
   const xOryValue = ["xの値:", "yの値:"];
   range_xy[i].noUiSlider.on("update", function(values){
-    value_xy[i].textContent = xOryValue[i]+values[0]+"~"+values[1];
+    min_xy[i] = values[0];
+    max_xy[i] = values[1];
+    value_xy[i].textContent = xOryValue[i]+min_xy[i]+"~"+max_xy[i];
   });
-};
+}
+
+startSubmit.addEventListener("click", startQuestion);
+
+function startQuestion(){
+  
+}
