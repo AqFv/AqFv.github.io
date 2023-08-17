@@ -1,3 +1,4 @@
+//configuration
 const range_xy =  [document.getElementById("range_x"), document.getElementById("range_y")];
 const value_xy = [document.getElementById("value_x"), document.getElementById("value_y")];
 const sliderOption = {
@@ -27,6 +28,11 @@ const max_xy = [];
 const numOfQuesField = document.getElementById("numOfQuestion");
 const startSubmit = document.getElementById("startSubmit");
 
+//answer
+const questionDisplay = document.createElement("label");
+const answerField = document.createElement("input");
+const answerSubmit = document.createElement("input");
+
 for(const range of range_xy) noUiSlider.create(range, sliderOption);
 for(let i = 0;i < 2;i++){
   const xOryValue = ["xの値:", "yの値:"];
@@ -36,11 +42,6 @@ for(let i = 0;i < 2;i++){
     value_xy[i].textContent = xOryValue[i]+min_xy[i]+"~"+max_xy[i];
   });
 }
-startSubmit.addEventListener("click", startQuestion);
-
-const questionDisplay = document.createElement("label");
-const answerField = document.createElement("input");
-const answerSubmit = document.createElement("input");
 
 questionDisplay.setAttribute("for", "answerField");
 answerField.setAttribute("id", "answerField");
@@ -48,7 +49,24 @@ answerField.setAttribute("type", "number");
 answerSubmit.setAttribute("type", "submit");
 answerSubmit.setAttribute("value", "解答");
 
+startSubmit.addEventListener("click", startQuestion);
+
 function startQuestion(){
+  if(numOfQuesField.value === "") return;
+
+  controlConfiguration(false);
+
+}
+
+function controlConfiguration(boolean){
+  if(boolean){
+    for(const range of range_xy) range.noUiSlider.enable();
+  }
+  else {
+    for(const range of range_xy) range.noUiSlider.disable();
+  }
+  numOfQuesField.disable = !boolean;
+  startSubmit.disable = !boolean;
 }
 
 function uniformDist(min, max){
