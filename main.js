@@ -36,9 +36,28 @@ for(let i = 0;i < 2;i++){
     value_xy[i].textContent = xOryValue[i]+min_xy[i]+"~"+max_xy[i];
   });
 }
-
 startSubmit.addEventListener("click", startQuestion);
 
+const questionDisplay = document.createElement("label");
+const answerField = document.createElement("input");
+const answerSubmit = document.createElement("input");
+
+questionDisplay.setAttribute("for", "answerField");
+answerField.setAttribute("id", "answerField");
+answerField.setAttribute("type", "number");
+answerSubmit.setAttribute("type", "submit");
+answerSubmit.setAttribute("value", "解答");
+
 function startQuestion(){
-  
+}
+
+function uniformDist(min, max){
+  return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+function createQuestion(){
+  let x = uniformDist(min_xy[0], max_xy[0]);
+  let y = uniformDist(min_xy[1], max_xy[1]);
+  questionDisplay.textContent = x+"×"+y+"=";
+  return [x, y];
 }
