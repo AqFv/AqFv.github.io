@@ -9,14 +9,14 @@
     <script src="main.js" defer></script>
   </head>
   <body>
-    <div class="configure">
+    <div class="configuration">
       <div id="value_x"></div>
       <div id="range_x"></div>
       <div id="value_y"></div>
       <div id="range_y"></div>
       <label for="numOfQuestion">問題数:</label>
       <input type="number" id="numOfQuestion" min="0", max="1000" oninput="javascript: this.value=this.value.slice(0,3)" placeholder="999まで"/>
-      <input type="submit" value="スタート" id="startSubmit">
+      <button id="startButton">開始</button>
     </div>
     <div class="answer"></div>
     <div class="status"></div>

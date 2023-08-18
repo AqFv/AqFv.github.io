@@ -26,7 +26,7 @@ const sliderOption = {
 const min_xy = [];
 const max_xy = [];
 const numOfQuesField = document.getElementById("numOfQuestion");
-const startSubmit = document.getElementById("startSubmit");
+const startSubmit = document.getElementById("startButton");
 
 for(const range of range_xy) noUiSlider.create(range, sliderOption);
 for(let i = 0;i < 2;i++){
@@ -43,17 +43,16 @@ startSubmit.addEventListener("click", startQuestion);
 //answer
 const questionDisplay = document.createElement("label");
 const answerField = document.createElement("input");
-const answerSubmit = document.createElement("input");
+const answerButton = document.createElement("button");
 const answerFragment = document.createDocumentFragment();
 
 questionDisplay.setAttribute("for", "answerField");
 answerField.setAttribute("id", "answerField");
 answerField.setAttribute("type", "number");
-answerSubmit.setAttribute("type", "submit");
-answerSubmit.setAttribute("value", "解答");
+answerButton.textContent = "解答";
 answerFragment.appendChild(questionDisplay);
 answerFragment.appendChild(answerField);
-answerFragment.appendChild(answerSubmit);
+answerFragment.appendChild(answerButton);
 
 function startQuestion(){
   if(numOfQuesField.value === "") return;
@@ -98,4 +97,12 @@ function createQuestion(){
   let y = uniformDist(min_xy[1], max_xy[1]);
   questionDisplay.textContent = x+"×"+y+"=";
   return [x, y];
+}
+
+function answerJudge(){
+  
+}
+
+function* answerGen(num){
+
 }
