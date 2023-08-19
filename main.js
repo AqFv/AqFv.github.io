@@ -45,6 +45,7 @@ const questionDisplay = document.createElement("label");
 const answerField = document.createElement("input");
 const answerButton = document.createElement("button");
 const answerFragment = document.createDocumentFragment();
+let question_x, question_y;
 
 questionDisplay.setAttribute("for", "answerField");
 answerField.setAttribute("id", "answerField");
@@ -58,10 +59,16 @@ function startQuestion(){
   if(numOfQuesField.value === "") return;
 
   controlConfiguration(false);
-
   controlAnswer(true);
 
-  
+  createQuestion();
+  let answerLoop = answerLoopGen(numOfQuesField.value);
+  answerButton.onclick = ()=>{
+    if(answerField.value == "") return;
+    let ans = Number(answerField.value);
+    if(question_x*question_y != ans) return;
+    answerLoop.next();
+  };
 }
 
 function controlConfiguration(boolean){
@@ -93,16 +100,14 @@ function uniformDist(min, max){
 }
 
 function createQuestion(){
-  let x = uniformDist(min_xy[0], max_xy[0]);
-  let y = uniformDist(min_xy[1], max_xy[1]);
-  questionDisplay.textContent = x+"×"+y+"=";
-  return [x, y];
+  question_x = uniformDist(min_xy[0], max_xy[0]);
+  question_y = uniformDist(min_xy[1], max_xy[1]);
+  questionDisplay.textContent = question_x+"×"+question_y+"=";
 }
 
-function answerJudge(){
-  
-}
-
-function* answerGen(num){
-
+function* answerLoopGen(num){
+  for(let i = 0;i < num-1;i++){
+    createQuestion();
+    yield;
+  }
 }
