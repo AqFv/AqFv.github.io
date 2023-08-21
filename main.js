@@ -26,7 +26,7 @@ const sliderOption = {
 const min_xy = [];
 const max_xy = [];
 const numOfQuesField = document.getElementById("numOfQuestion");
-const startSubmit = document.getElementById("startButton");
+const startButton = document.getElementById("startButton");
 
 for(const range of range_xy) noUiSlider.create(range, sliderOption);
 for(let i = 0;i < 2;i++){
@@ -38,7 +38,7 @@ for(let i = 0;i < 2;i++){
   });
 }
 
-startSubmit.addEventListener("click", startQuestion);
+startButton.addEventListener("click", startQuestion);
 
 //answer
 const questionDisplay = document.createElement("label");
@@ -64,8 +64,10 @@ function startQuestion(){
   createQuestion();
   let answerLoop = answerLoopGen(numOfQuesField.value);
   answerButton.onclick = ()=>{
+    answerField.focus();
     if(answerField.value == "") return;
     let ans = Number(answerField.value);
+    answerField.value = "";
     if(question_x*question_y != ans) return;
     answerLoop.next();
   };
@@ -78,8 +80,8 @@ function controlConfiguration(boolean){
   else {
     for(const range of range_xy) range.noUiSlider.disable();
   }
-  numOfQuesField.disable = !boolean;
-  startSubmit.disable = !boolean;
+  numOfQuesField.disabled = !boolean;
+  startButton.disabled = !boolean;
 }
 
 function controlAnswer(boolean){
@@ -92,7 +94,9 @@ function controlAnswer(boolean){
     divAnswer.appendChild(answerFragment);
     return;
   }
-  divAnswer.removeChild(answerFragment);
+  divAnswer.removeChild(questionDisplay);
+  divAnswer.removeChild(answerField);
+  divAnswer.removeChild(answerButton);
 }
 
 function uniformDist(min, max){
@@ -103,6 +107,7 @@ function createQuestion(){
   question_x = uniformDist(min_xy[0], max_xy[0]);
   question_y = uniformDist(min_xy[1], max_xy[1]);
   questionDisplay.textContent = question_x+"×"+question_y+"=";
+  answerField.focus();
 }
 
 function* answerLoopGen(num){
@@ -110,4 +115,6 @@ function* answerLoopGen(num){
     createQuestion();
     yield;
   }
+  controlConfiguration(true);
+  controlAnswer(false);
 }
