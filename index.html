@@ -14,14 +14,16 @@
       <div id="range_x"></div>
       <div id="value_y"></div>
       <div id="range_y"></div>
-      <label for="numOfQuestion">問題数:</label>
-      <input type="number" id="numOfQuestion" min="0", max="1000" oninput="javascript: this.value=this.value.slice(0,3)" placeholder="999まで"/>
+      <label for="questionNumber">問題数:</label>
+      <input type="number" id="questionNumber" min="0", max="1000" oninput="javascript: this.value=this.value.slice(0,3)" placeholder="999まで"/>
       <button id="startButton">開始</button>
     </div>
     <div class="answer">
+      <span id="remainQuestion">残問題数:-</span><br>
       <label for="answerField" id="questionDisplay">x×y=</label>
       <input type="number" id="answerField">
-      <button id="answerButton">解答</button>
+      <button id="answerButton">解答</button><br>
+      <button id="finishButton">中止</button>
     </div>
     <div class="status"></div>
   </body>

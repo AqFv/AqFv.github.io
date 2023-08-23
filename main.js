@@ -25,7 +25,7 @@ const sliderOption = {
 };
 const min_xy = [];
 const max_xy = [];
-const numOfQuesField = document.getElementById("numOfQuestion");
+const quesNumField = document.getElementById("questionNumber");
 const startButton = document.getElementById("startButton");
 
 for(const range of range_xy) noUiSlider.create(range, sliderOption);
@@ -41,22 +41,27 @@ for(let i = 0;i < 2;i++){
 startButton.addEventListener("click", startQuestion);
 
 //answer
+const remainQuestion = { elem:document.getElementById("remainQuestion"), remain:-1 };
 const questionDisplay = document.getElementById("questionDisplay");
 const answerField = document.getElementById("answerField");
 const answerButton = document.getElementById("answerButton");
+const finishButton = document.getElementById("finishButton");
 let question_x, question_y;
 
 answerField.disabled = true;
 answerButton.disabled = true;
+finishButton.disabled = true;
+finishButton.addEventListener("click", finishAnswer);
 
 function startQuestion(){
-  if(numOfQuesField.value === "") return;
+  if(quesNumField.value == 0) return;
 
   controlConfiguration(false);
   controlAnswer(true);
 
+  remainQuestion.remain = Number(quesNumField.value);
   createQuestion();
-  let answerLoop = answerLoopGen(numOfQuesField.value);
+  let answerLoop = answerLoopGen(quesNumField.value);
   answerButton.onclick = ()=>{
     answerField.focus();
     if(answerField.value == "") return;
@@ -74,13 +79,14 @@ function controlConfiguration(boolean){
   else {
     for(const range of range_xy) range.noUiSlider.disable();
   }
-  numOfQuesField.disabled = !boolean;
+  quesNumField.disabled = !boolean;
   startButton.disabled = !boolean;
 }
 
 function controlAnswer(boolean){
   answerField.disabled = !boolean;
   answerButton.disabled = !boolean;
+  finishButton.disabled = !boolean;
 }
 
 function uniformDist(min, max){
@@ -88,10 +94,24 @@ function uniformDist(min, max){
 }
 
 function createQuestion(){
+  remainQuestion.remain--;
+  remainQuestion.elem.textContent = "残問題数:"+remainQuestion.remain;
   question_x = uniformDist(min_xy[0], max_xy[0]);
   question_y = uniformDist(min_xy[1], max_xy[1]);
   questionDisplay.textContent = question_x+"×"+question_y+"=";
   answerField.focus();
+}
+
+function clearAnswer(){
+  questionDisplay.textContent = "x×y=";
+  answerField.value = "";
+  remainQuestion.elem.textContent = "残問題数:-";
+}
+
+function finishAnswer(){
+  controlConfiguration(true);
+  controlAnswer(false);
+  clearAnswer();
 }
 
 function* answerLoopGen(num){
@@ -101,4 +121,5 @@ function* answerLoopGen(num){
   }
   controlConfiguration(true);
   controlAnswer(false);
+  finishAnswer();
 }
