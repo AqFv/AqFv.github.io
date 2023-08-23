@@ -1,6 +1,6 @@
 #range_x, #range_y {
   width: 300px;
-  margin: 55px 20px;
+  margin: 50px 50px;
 }
 
 #resultLog {
@@ -16,4 +16,8 @@
 
 #resultLog .incorrect {
   color: red;
+}
+
+#resultLog .skipped {
+  color: blue;
 }

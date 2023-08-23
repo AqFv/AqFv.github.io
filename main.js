@@ -45,12 +45,19 @@ const remainQuestion = { elem:document.getElementById("remainQuestion"), remain:
 const questionDisplay = document.getElementById("questionDisplay");
 const answerField = document.getElementById("answerField");
 const answerButton = document.getElementById("answerButton");
+const skipButton = document.getElementById("skipButton");
 const finishButton = document.getElementById("finishButton");
 let question_x, question_y;
+let answerLoop;
 
 answerField.disabled = true;
 answerButton.disabled = true;
 finishButton.disabled = true;
+skipButton.disabled = true;
+skipButton.addEventListener("click", ()=>{
+  answerLog(question_x, question_y, -1, true);
+  answerLoop.next();
+});
 finishButton.addEventListener("click", finishAnswer);
 
 //status
@@ -64,7 +71,7 @@ function startQuestion(){
 
   remainQuestion.remain = Number(quesNumField.value);
   createQuestion();
-  let answerLoop = answerLoopGen(quesNumField.value);
+  answerLoop = answerLoopGen(quesNumField.value);
   answerButton.onclick = ()=>{
     answerField.focus();
     if(answerField.value == "") return;
@@ -90,6 +97,7 @@ function controlAnswer(boolean){
   answerField.disabled = !boolean;
   answerButton.disabled = !boolean;
   finishButton.disabled = !boolean;
+  skipButton.disabled = !boolean;
 }
 
 function uniformDist(min, max){
@@ -117,9 +125,10 @@ function finishAnswer(){
   clearAnswer();
 }
 
-function answerLog(x, y, ans){
+function answerLog(x, y, ans, skip=false){
   let log;
-  if(x*y == ans) log = "<p class='correct'>"+x+"×"+y+"="+ans+" 正解";
+  if(skip) log = "<p class='skipped'>"+x+"×"+y+"="+x*y+" スキップ";
+  else if(x*y == ans) log = "<p class='correct'>"+x+"×"+y+"="+ans+" 正解";
   else log = "<p class='incorrect'>"+x+"×"+y+"≠"+ans+" 不正解";
   log += "</p>"
   resultLog.insertAdjacentHTML("afterbegin", log);
