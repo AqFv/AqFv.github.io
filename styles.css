@@ -2,3 +2,18 @@
   width: 300px;
   margin: 55px 20px;
 }
+
+#resultLog {
+  padding: 1px;
+  border: 1px dotted #000;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+#resultLog .correct {
+  color: green;
+}
+
+#resultLog .incorrect {
+  color: red;
+}

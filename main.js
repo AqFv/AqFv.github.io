@@ -53,6 +53,9 @@ answerButton.disabled = true;
 finishButton.disabled = true;
 finishButton.addEventListener("click", finishAnswer);
 
+//status
+const resultLog = document.getElementById("resultLog");
+
 function startQuestion(){
   if(quesNumField.value == 0) return;
 
@@ -67,8 +70,8 @@ function startQuestion(){
     if(answerField.value == "") return;
     let ans = Number(answerField.value);
     answerField.value = "";
-    if(question_x*question_y != ans) return;
-    answerLoop.next();
+    answerLog(question_x, question_y, ans);
+    if(question_x*question_y == ans) answerLoop.next();
   };
 }
 
@@ -112,6 +115,14 @@ function finishAnswer(){
   controlConfiguration(true);
   controlAnswer(false);
   clearAnswer();
+}
+
+function answerLog(x, y, ans){
+  let log;
+  if(x*y == ans) log = "<p class='correct'>"+x+"×"+y+"="+ans+" 正解";
+  else log = "<p class='incorrect'>"+x+"×"+y+"≠"+ans+" 不正解";
+  log += "</p>"
+  resultLog.insertAdjacentHTML("afterbegin", log);
 }
 
 function* answerLoopGen(num){
