@@ -18,7 +18,11 @@
       <input type="number" id="numOfQuestion" min="0", max="1000" oninput="javascript: this.value=this.value.slice(0,3)" placeholder="999まで"/>
       <button id="startButton">開始</button>
     </div>
-    <div class="answer"></div>
+    <div class="answer">
+      <label for="answerField" id="questionDisplay">x×y=</label>
+      <input type="number" id="answerField">
+      <button id="answerButton">解答</button>
+    </div>
     <div class="status"></div>
   </body>
 </html>

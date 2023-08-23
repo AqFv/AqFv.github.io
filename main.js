@@ -41,19 +41,13 @@ for(let i = 0;i < 2;i++){
 startButton.addEventListener("click", startQuestion);
 
 //answer
-const questionDisplay = document.createElement("label");
-const answerField = document.createElement("input");
-const answerButton = document.createElement("button");
-const answerFragment = document.createDocumentFragment();
+const questionDisplay = document.getElementById("questionDisplay");
+const answerField = document.getElementById("answerField");
+const answerButton = document.getElementById("answerButton");
 let question_x, question_y;
 
-questionDisplay.setAttribute("for", "answerField");
-answerField.setAttribute("id", "answerField");
-answerField.setAttribute("type", "number");
-answerButton.textContent = "解答";
-answerFragment.appendChild(questionDisplay);
-answerFragment.appendChild(answerField);
-answerFragment.appendChild(answerButton);
+answerField.disabled = true;
+answerButton.disabled = true;
 
 function startQuestion(){
   if(numOfQuesField.value === "") return;
@@ -85,18 +79,8 @@ function controlConfiguration(boolean){
 }
 
 function controlAnswer(boolean){
-  const divAnswer = document.querySelector("div.answer");
-  if(divAnswer == null){
-    console.log("divAnswer is null.");
-    return;
-  }
-  if(boolean){
-    divAnswer.appendChild(answerFragment);
-    return;
-  }
-  divAnswer.removeChild(questionDisplay);
-  divAnswer.removeChild(answerField);
-  divAnswer.removeChild(answerButton);
+  answerField.disabled = !boolean;
+  answerButton.disabled = !boolean;
 }
 
 function uniformDist(min, max){
