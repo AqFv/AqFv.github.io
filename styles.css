@@ -6,6 +6,7 @@
 #resultLog {
   padding: 1px;
   border: 1px dotted #000;
+  width: 400px;
   height: 200px;
   overflow-y: scroll;
 }
